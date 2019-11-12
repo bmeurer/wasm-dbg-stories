@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stepping out of Wasm back into JavaScript</title>
+    <script src="main.js"></script>
+    <script>
+      (async () => {
+        const {foo} = await instantiateStreaming('stepping-out-wasm.wasm');
+        function bar() {
+          foo();
+          console.log('You should end up here!');
+        }
+        document.querySelector('#btn').onclick = bar;
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Stepping out of Wasm back into JavaScript</h1>
+
+    <p>
+      This tests that the DevTools can seamless step out of a Wasm
+      function back into JavaScript.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Reload this page</li>
+        <li>Locate <code>foo</code> function in <code>stepping-out-wasm.wasm</code> module and set a breakpoint on the <code>i32.const 1</code> line</li>
+        <li>Click <button id='btn'>this button</button></li>
+        <li>The page pauses on the breakpoint that you set in <code>foo</code></li>
+        <li>Now hitting Step or Step Out should get you into the <code>bar</code> JavaScript function right onto the <code>console.log</code> line</li>
+      </ol>
+    </p>
+  </body>
+</html>

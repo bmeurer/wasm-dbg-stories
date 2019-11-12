@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Use Response.url in DevTools</title>
+    <script src="main.js"></script>
+    <script>
+      (async () => {
+        const {plus} = await instantiateStreaming('response-url.wasm');
+        console.log(`result: ${plus(3, 39)}`);
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Use <code>Response.url</code> in DevTools</h1>
+
+    <p>
+      This tests that the DevTools utilize the <code>Response.url</code> property
+      when using <code>WebAssembly.instantiate</code> to properly show the
+      <code>response-url.wasm</code> file in the Sources / Debugger panel. The
+      <code>response-url.wasm</code> file should show up next to the 
+      <code>main.js</code> and <code>response-url.html</code> files.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Reload this page</li>
+        <li>Search for <code>response-url.wasm</code> in the Sources / Debugger panel</li>
+      </ol>
+    </p>
+  </body>
+</html>

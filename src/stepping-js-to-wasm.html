@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stepping from JavaScript into Wasm</title>
+    <script src="main.js"></script>
+    <script>
+      (async () => {
+        const {foo} = await instantiateStreaming('stepping-js-to-wasm.wasm');
+        function bar() {
+          debugger;
+          foo();
+        }
+        bar();
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Stepping from JavaScript into Wasm</h1>
+
+    <p>
+      This tests that the DevTools can seamless step from JavaScript
+      into Wasm functions.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Reload this page</li>
+        <li>The page pauses on <code>debugger</code> statement in JavaScript function <code>bar</code></li>
+        <li>Now hitting Step / Step In twice should get you into the Wasm function <code>foo</code></li>
+      </ol>
+    </p>
+  </body>
+</html>

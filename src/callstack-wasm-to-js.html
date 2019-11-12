@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Call Stack when breaking in JavaScript from Wasm</title>
+    <script src="main.js"></script>
+    <script>
+      (async () => {
+        const {foo} = await instantiateStreaming('callstack-wasm-to-js.wasm', {bar});
+        function bar() {
+          debugger;
+        }
+        document.querySelector('#btn').onclick = foo;
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Call Stack when breaking in JavaScript from Wasm</h1>
+
+    <p>
+      This tests that the Call Stack shown in DevTools makes sense when calling a JavaScript function from
+      Wasm and having a breakpoint in said JavaScript function.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Reload the page with DevTools closed</li>
+        <li>Open DevTools</li>
+        <li>Click <button id='btn'>this button</button></li>
+        <li>The page pauses on the <code>debugger</code> statement in <code>bar</code></li>
+        <li>Now look at the Call Stack in the DevTools and make sure that it shows <code>bar</code> called from <code>foo</code></li>
+      </ol>
+    </p>
+  </body>
+</html>

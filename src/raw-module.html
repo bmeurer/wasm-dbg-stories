@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Raw Wasm module display with byte code offsets</title>
+    <script src="main.js"></script>
+    <script>
+      (async () => {
+        const {a, b, c} = await instantiateStreaming('raw-module.wasm');
+        console.log(`result: ${a(b(c(1)))}`);
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Raw Wasm module display with byte code offsets</h1>
+
+    <p>
+      This tests that the DevTools properly displays the <code>raw-module.wasm</code>
+      as a single file using byte code offsets to refer to the individual functions
+      and expressions within the file.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Reload this page</li>
+        <li>Look for <code>raw-module.wasm</code> in the Sources / Debugger panel, this should be a single file with three Wasm functions <code>$a</code>, <code>$b</code> and <code>$c</code> inside.</li>
+      </ol>
+    </p>
+  </body>
+</html>

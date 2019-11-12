@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wasm modules show up when opening DevTools</title>
+    <script src="main.js"></script>
+    <script>
+      Promise.all([instantiateStreaming('show-wasm-1.wasm'),
+                   instantiateStreaming('show-wasm-2.wasm')]).catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Wasm modules show up when opening DevTools</h1>
+
+    <p>
+      This tests that the DevTools show all <code>.wasm</code> modules loaded
+      on page even when opening the debugger after the page is loaded.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Load this page with DevTools closed</li>
+        <li>Open DevTools</li>
+        <li>Discover <code>show-wasm-1.wasm</code> and <code>show-wasm-2.wasm</code> in the Sources / Debugger panel</li>
+      </ol>
+    </p>
+  </body>
+</html>

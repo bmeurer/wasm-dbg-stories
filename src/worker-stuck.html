@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Worker stuck in Atomics.wait</title>
+  </head>
+  <body>
+    <h1>Worker stuck in <code>Atomics.wait</code></h1>
+
+    <p>
+      This tests that a worker that is stuck in <code>Atomics.wait</code> still has some way to interact
+      with the DevTools in a meaningful way. The reason why this is important in the scope of WebAssembly
+      is that <code>pthreads</code> are implemented in WebAssembly via workers, and these workers are pooled
+      and essentially just sit inside <code>Atomics.wait</code> until a new threads is started via
+      <code>pthread_start</code>.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Reload the page</li>
+        <li>Try to open the <code>worker-stuck.js</code> and observe that it doesn't show any contents</li>
+        <li>Click <button id='btn'>this button</button></li>
+        <li>Suddenly the contents of the file appear</li>
+      </ol>
+    </p>
+
+    <script>
+      const worker = new Worker('worker-stuck.js');
+      const buffer = new SharedArrayBuffer(1024);
+      const array = new Int32Array(buffer);
+      worker.postMessage({buffer});
+      document.querySelector('#btn').onclick = () => {
+        Atomics.store(array, 0, 1);
+        Atomics.notify(array, 0, 1);
+      }
+    </script>
+  </body>
+</html>
