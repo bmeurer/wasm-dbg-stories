@@ -1,0 +1,3 @@
+self.onmessage = () => {
+  while (true) {}
+};

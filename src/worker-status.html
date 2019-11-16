@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Missing indicator for worker status</title>
+  </head>
+  <body>
+    <h1>Missing indicator for worker status</h1>
+
+    <p>
+      This tests that developers are able to tell the status of a worker by looking at the <i>Threads</i>
+      view in the DevTools.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Reload the page</li>
+        <li>Look at the <i>Threads</i> view in the <i>Sources</i> / <i>Debugger</i> panel, and discover <code>Main</code> is shown as idle, while <code>worker-status-busy.js</code> is shown as actively executing, while <code>worker-status-wait.js</code> is shown as waiting in <code>Atomics.wait</code></li>
+      </ol>
+    </p>
+
+    <script>
+      (new Worker('worker-status-busy.js')).postMessage({});
+      (new Worker('worker-status-wait.js')).postMessage({});
+    </script>
+  </body>
+</html>
