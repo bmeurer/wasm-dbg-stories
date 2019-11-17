@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pause on exception with Wasm</title>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <h1>Pause on exception with Wasm</h1>
+
+    <p>
+      This tests that pausing on (uncaught) exceptions properly
+      leaves the Wasm frames in an inspectable state in the DevTools.
+      This is important, as pause on exception usually becomes important
+      when it's hard to reproduce the problem, and so re-running with
+      additional debugging is usually non-trivial.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Turn on <i>Pause on exceptions</i></li>
+        <li>Reload this page and click <button id='btn'>this button</button></li>
+        <li>Observe that the debugger stops in JavaScript function <code>foo</code> on top of the stack, called from Wasm function <code>bar</code></li>
+        <li>Now select the frame for <code>bar</code> in the <i>Call Stack</i> and try to inspect the parameter value</li>
+      </ol>
+    </p>
+    <script>
+      function foo(x) {
+        document.querySelector();
+      }
+      (async () => {
+        const {bar} = await instantiateStreaming('wasm-pause-exception.wasm', {foo});
+        document.querySelector('#btn').onclick = bar.bind(null, 42);
+      })().catch(console.error);
+    </script>
+  </body>
+</html>
