@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Files in multiple workers</title>
+  </head>
+  <body>
+    <h1>Files in multiple workers</h1>
+
+    <p>
+      This tests that a file that is used in multiple workers appears as a single entity in the developer tools
+      to match the workflow for threads that developers are used to from other environments.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Open the <code>multi-workers.js</code> on one of the workers</li>
+        <li>Reload the page</li>
+        <li>You should have only one version of the <code>multi-workers.js</code> file open</li>
+      </ol>
+    </p>
+
+    <script>
+      for (let i = 0; i < 10; ++i) new Worker('multi-workers.js');
+    </script>
+  </body>
+</html>
