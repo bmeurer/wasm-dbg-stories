@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resume a worker after it has been paused in the debugger</title>
+  </head>
+  <body>
+    <h1>Resume a worker after it has been paused in the debugger</h1>
+
+    <p>
+      This tests that a worker that has been paused with the debugger can be resumed.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools to the Sources panel</li>
+        <li>Reload the page</li>
+        <li>Click on worker.js under the 'Threads' tab on the right</li>
+        <li>Click debugger pause</li>
+        <li>Click the debugger resume button</li>
+      </ol>
+    </p>
+
+    <script>
+      const worker = new Worker('worker-resume-pause.js');
+      const buffer = new SharedArrayBuffer(1024);
+      worker.postMessage({buffer});
+    </script>
+  </body>
+</html>
