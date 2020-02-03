@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Break on script in multiple workers</title>
+  </head>
+  <body>
+    <h1>Break on script in multiple workers</h1>
+
+    <p>
+      This tests that when the same script is open in multiple workers, breaking in the script doesn't
+      open multiple tabs.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Enable pause on exceptions or set a breakpoint in the worker's event handler</li>
+        <li>Click <button id='btn'>this button</button></li>
+        <li>Resume script execution</li>
+        <li>Click <button id='btn2'>this button</button></li>
+        <li>Error should be in same tab</li>
+      </ol>
+    </p>
+
+    <script>
+      const worker = new Worker('multi-worker-break.js');
+      const worker2 = new Worker('multi-worker-break.js');
+      document.querySelector('#btn').onclick = () => {
+        worker.postMessage({});
+      }
+      document.querySelector('#btn2').onclick = () => {
+        worker2.postMessage({});
+      }
+    </script>
+  </body>
+</html>
