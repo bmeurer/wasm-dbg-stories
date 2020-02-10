@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Use Response.url in Wasm stack traces</title>
+    <script>
+      (async () => {
+        const {throwError} = (await WebAssembly.instantiateStreaming(fetch('response-url-stack.wasm'))).instance.exports;
+        try {
+          throwError();
+        } catch (e) {
+          console.log(e.stack);
+        }
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>Use <code>Response.url</code> in Wasm stack traces</h1>
+
+    <p>
+      This tests that the DevTools utilize the <code>Response.url</code> property
+      when generating a Wasm entry in a stack trace, for example in <code>Error#stack</code>.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Go to the Console</li>
+        <li>The first line should read <code>response-url-stack.wat.throwError (https://wasm-dbg-stories.netlify.org/response-url-stack.wasm:wasm-function[0]:0x2a)</code></li>
+      </ol>
+    </p>
+  </body>
+</html>
