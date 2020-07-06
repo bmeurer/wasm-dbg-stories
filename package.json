@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "Benedikt Meurer <bmeurer@chromium.org>",
-  "license": "Apache-2.0",
+  "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
     "delete": "^1.1.0",
