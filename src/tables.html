@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tables</title>
+  <script>
+    (async () => {
+      const {instance: {exports: {incdec}}} = await WebAssembly.instantiateStreaming(fetch('tables.wasm'), {});
+      const inc = incdec.get(0);
+      const dec = incdec.get(1);
+      console.log(inc(1));
+      console.log(dec(9));
+    })();
+  </script>
+</head>
+<body>
+  <h1>Tables</h1>
+  <p>
+    This tests that the Scope view and the Console in DevTools provides access to tables in the WebAssembly
+    module instance.
+  </p>
+  <h2>Steps</h2>
+  <p>
+    <ol>
+      <li>Open DevTools</li>
+      <li>Locate the Wasm function <code>inc</code> from the <code>tables.wasm</code> module and set a breakpoint on the <code>local.get $x</code> line</li>
+      <li>Reload the page</button></li>
+      <li>DevTools should hit the new breakpoint</button></li>
+      <li>Now look at the Scope in the DevTools and make sure that it shows the <code>incdec</code> table with the two function entries</li>
+      <li>Now type <code>$incdec</code> into the Console, that should show the WebAssembly table with the two entries</li>
+    </ol>
+  </p>
+</body>
+</html>
