@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Memory with memory updates</title>
+  <script>
+    (async () => {
+      const maximum = 1500;
+      const memory = new WebAssembly.Memory({maximum, initial: 100});
+      const string = "Hello this is a string in wasm memory!";
+      const int8Array = new Uint8Array(memory.buffer);
+      for (var i = 0; i < string.length; ++i) {
+        int8Array[i] = string.charCodeAt(i);
+      }
+      const numInts = maximum - string.length;
+      for (var i = string.length; i < numInts; ++i) {
+        int8Array[i] = i;
+      }
+
+      const importObj = {imports: {memory}};
+      const instance = await WebAssembly.instantiateStreaming(fetch('memory-write.wasm'), importObj);
+      instance.instance.exports.loop();
+    })();
+  </script>
+</head>
+<body>
+  <h1>Memory with memory updates</h1>
+  <p>
+    This tests that we can inspect the Wasm memory that is continuously updated within a loop.
+  </p>
+  <h2>Steps</h2>
+  <p>
+    <ol>
+      <li>Open DevTools</li>
+      <li>Locate the Wasm function <code>loop</code> from the <code>memory-write.wasm</code> module and set a breakpoint on the first line in the loop body</li>
+      <li>Reload the page</button></li>
+      <li>Breakpoint should hit the new breakpoint</button></li>
+      <li>Now look at the Scope in the DevTools and right click on the <code>imports.memory</code></li>
+      <li>Select "Inspect memory"</li>
+      <li>The linear memory inspector should open</li>
+      <li>Step in the loop body</li>
+      <li>After the <code>i64.store<code/> instruction the memory should reflect the latest updates</li>
+    </ol>
+  </p>
+</body>
+</html>
