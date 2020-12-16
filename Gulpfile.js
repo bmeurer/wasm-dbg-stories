@@ -12,7 +12,7 @@ const buildAssets = () => src(`${SRCDIR}/*.{html,ico,js}`).
 
 const buildWasm = () => {
   return src(`${SRCDIR}/*.wat`).
-    pipe(wat2wasm({}, {write_debug_names: true})).
+    pipe(wat2wasm({simd: true}, {write_debug_names: true})).
     pipe(dest(`${DISTDIR}`)).
     pipe(connect.reload());
 }

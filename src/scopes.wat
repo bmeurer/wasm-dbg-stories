@@ -2,7 +2,9 @@
   (global $imports.global (;0;) (import "imports" "global") (mut i32))
   (memory $memory0 1)
   (func $foo (;0;) (export "foo") (param $i32 (;0;) i32) (result i32)
-    (local $i64_var (;1;) i64) (local $f32_var (;2;) f32) (local $f64_var (;3;) f64)
+    (local $i64_var (;1;) i64) (local $f32_var (;2;) f32) (local $f64_var (;3;) f64) (local $v128_var (;4;) v128)
+    v128.const i32x4 1 2 3 4
+    local.set $v128_var
     i64.const 9221120237041090
     local.set $i64_var
     f32.const 5.5
