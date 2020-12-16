@@ -14,7 +14,7 @@
     "delete": "^1.1.0",
     "gulp": "^4.0.2",
     "gulp-connect": "^5.7.0",
-    "gulp-wat2wasm": "^1.0.20",
+    "gulp-wat2wasm": "^1.1.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.19.1"
