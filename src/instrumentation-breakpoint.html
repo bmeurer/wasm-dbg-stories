@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instrumentation breakpoint</title>
+  <script>
+    function foo(x) {
+      x = x * 2;
+      return x;
+    }
+    console.log(`${foo(4)}`);
+  </script>
+</head>
+<body>
+  <h1>Instrumentation breakpoint</h1>
+  <p>
+    This tests that we can hit breakpoints in JavaScript on initial load (essentially tests that DevTools properly uses the
+    <a href="https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-setInstrumentationBreakpoint">Debugger.setInstrumentationBreakpoint</a>
+    API).
+  </p>
+  <h2>Steps</h2>
+  <p>
+    <ol>
+      <li>Open DevTools</li>
+      <li>Set a breakpoint in function <code>foo</code> in <code>instrumentation-breakpoint.html</code> line 7</li>
+      <li>Open a new tab (optionally closing this tab) and open DevTools</li>
+      <li>Navigate to this page in the new tab</li>
+      <li>DevTools should pause on the breakpoint in function <code>foo</code></li>
+    </ol>
+  </p>
+</body>
+</html>
