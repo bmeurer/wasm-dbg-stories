@@ -9,15 +9,17 @@
   "keywords": [],
   "author": "Benedikt Meurer <bmeurer@chromium.org>",
   "license": "BSD-3-Clause",
-  "dependencies": {},
   "devDependencies": {
     "delete": "^1.1.0",
     "gulp": "^4.0.2",
     "gulp-connect": "^5.7.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-wat2wasm": "^1.1.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "typescript": "^4.1.3"
   },
   "husky": {
     "hooks": {
