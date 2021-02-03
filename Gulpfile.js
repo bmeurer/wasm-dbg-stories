@@ -23,7 +23,7 @@ const buildTypeScript = () => {
 
 const buildWasm = () => {
   return src(`${SRCDIR}/*.wat`).
-    pipe(wat2wasm({simd: true}, {write_debug_names: true})).
+    pipe(wat2wasm({simd: true, reference_types: true}, {write_debug_names: true})).
     pipe(dest(`${DISTDIR}`)).
     pipe(connect.reload());
 }

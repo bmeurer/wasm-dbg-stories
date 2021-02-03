@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reference Types</title>
+  <script>
+    (async () => {
+      const mut_global = new WebAssembly.Global({value: 'externref', mutable: true}, {foo: 'bar'});
+      const global = new WebAssembly.Global({value: 'externref', mubable: false}, {hello: 'world'});
+      const importObj = {imports: {mut_global, global}};
+      const instance = await WebAssembly.instantiateStreaming(fetch('externref.wasm'), importObj);
+      instance.instance.exports.foo({extern: 'ref'});
+      instance.instance.exports.modify_table({extern: 'ref'});
+    })();
+  </script>
+</head>
+<body>
+  <h1>Scopes</h1>
+  <p>
+    This tests that externref parameters, locals, globals, and tables are shown
+    with all relevant information in DevTools when paused in a Wasm function.
+    This includes showing the JavaScript objects stored in parameters, locals,
+    globals, and tables.
+  </p>
+  <h2>Steps</h2>
+  <p>
+    <ol>
+      <li>Open DevTools</li>
+      <li>Locate the Wasm function <code>foo</code> from the <code>externref.wasm</code> module and set a breakpoint on the <code>global.get $ref_mut_global</code> line</li>
+      <li>Reload the page</button></li>
+      <li>Breakpoint should hit the new breakpoint</button></li>
+      <li>Now look at the Scope in the DevTools and make sure that it shows all the necessary information mentioned above in an easily accessible fashion</li>
+      <li>Remove the breakpoint</button></li>
+      <li>Locate the Wasm function <code>modify_table</code> from the <code>externref.wasm</code> module and set a breakpoint on the <code>i32.const 0</code> line</li>
+      <li>Reload the page</button></li>
+      <li>Breakpoint should hit the new breakpoint</button></li>
+      <li>Now look at the Scope in the DevTools and make sure that it shows the <code>refs</code> table with the following three entries at the positions 1, 2, and 3: <code>{extern: 'ref'}</code>, <code>{foo: 'bar'}</code>, <code>{hello: 'world'}</code></li>
+      <li>Now type <code>$incdec</code> into the Console, that should show the WebAssembly table with the two entries</li>
+    </ol>
+  </p>
+</body>
+</html>
