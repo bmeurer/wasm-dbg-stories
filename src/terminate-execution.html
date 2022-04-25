@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TerminateExecution for WebAssembly in DevTools</title>
+    <script>
+      (async () => {
+        const module = await WebAssembly.compileStreaming(fetch('terminate-execution.wasm'));
+        const instance = new WebAssembly.Instance(module);
+        const {one} = instance.exports;
+        console.log(`result: ${one()}`);
+      })().catch(console.error);
+    </script>
+  </head>
+  <body>
+    <h1>TerminateExecution for WebAssembly in DevTools</h1>
+
+    <p>
+      This tests that WebAssembly handles <code>TerminateExecution</code> properly.
+    </p>
+
+    <h2>Steps</h2>
+
+    <p>
+      <ol>
+        <li>Open DevTools</li>
+        <li>Set a breakpoint in <code>terminate-execution.wasm</code></li>
+        <li>Reload this page and observe that DevTools is paused on the breakpoint</li>
+        <li>Stop execution, nothing should be printed to the <i>Console</i></li>
+      </ol>
+    </p>
+  </body>
+</html>
